@@ -1,0 +1,46 @@
+/* Add this to your global stylesheet or a CSS module */
+@keyframes shine {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+body{
+  background-image: linear-gradient(to left, #fddff5ca 0%, #82A6F3 100%);
+}
+.custom-bg{
+  background-image: linear-gradient(to left, #fddff5ca 0%, #82A6F3 100%) !important;
+}
+
+.shine-effect {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5));
+  background-size: 200% 100%;
+  animation: shine 2s infinite;
+}
+
+.banner-gradient{
+  background-image: linear-gradient(-225deg, #e3f1fd 0%, #FFE6FA 100%);
+}
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+.sidebar-hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+.sidebar-hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.card-bg{
+  background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+  /* background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%); */
+}
+
+.detail-modal-bg{
+  background-image: linear-gradient(to top, #f8fffd 0%, #FFE6FA 100%);
+}
