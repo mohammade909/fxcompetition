@@ -16,7 +16,7 @@ const NotificationCenter = () => {
   }, [dispatch, auth.user_id]);
 
   return (
-    <div className="min-h-screen bg-opacity-5 backdrop-blur-md  flex flex-col items-center p-4">
+    <div className="min-h-screen bg-opacity-5   flex flex-col items-center p-4">
       <h1 className="text-2xl font-bold mb-4">Notifications</h1>
       <div className="w-full max-w-3xl">
         {notifications && notifications.length > 0 ? (

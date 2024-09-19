@@ -52,20 +52,20 @@
             leverage,
             currency,
             is_demo,
-            server_id = 79847587 // Default server ID
+            server_id// Default server ID
         } = req.body;
     
         try {
             if (is_demo) {
                 // Check if the trader already has a demo account
-                const [existingDemoAccount] = await db.promise().query(
-                    'SELECT * FROM accounts WHERE trader_id = ? AND is_demo = true',
-                    [trader_id]
-                );
+                // const [existingDemoAccount] = await db.promise().query(
+                //     'SELECT * FROM accounts WHERE trader_id = ? AND is_demo = true',
+                //     [trader_id]
+                // );
     
-                if (existingDemoAccount.length > 0) {
-                    return next(new ErrorHandler('Trader already has a demo account. Only one demo account is allowed per trader.', 400));
-                }
+                // if (existingDemoAccount.length > 0) {
+                //     return next(new ErrorHandler('Trader already has a demo account. Only one demo account is allowed per trader.', 400));
+                // }
     
                 const account_number = await generateUniqueAccountNumber();
                 const password = generateRandomPassword();
@@ -102,9 +102,7 @@
                 const [traderWallet] = await db.promise().query(
                     'SELECT * FROM wallet WHERE user_id = ?',
                     [trader_id]
-                );
-
-                            
+                );                            
     
                 if (traderWallet.length === 0) {
                     return next(new ErrorHandler('Trader not found', 404));

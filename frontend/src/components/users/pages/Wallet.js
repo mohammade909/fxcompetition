@@ -64,7 +64,7 @@ export default function Wallet() {
         <h2 className="text-2xl font-mono text-gray-700">{wallet}</h2>
       </div>
 
-      <div className="max-w-6xl mx-auto mt-10 bg-white shadow-md rounded-lg bg-opacity-5 backdrop-blur-md  p-6">
+      <div className="max-w-6xl mx-auto mt-10 shadow-md rounded-lg bg-opacity-5   p-6">
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold text-gray-500 mb-6">
             Transactions
@@ -112,7 +112,7 @@ export default function Wallet() {
         {!loading && filteredTransactions.length > 0 && (
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y  divide-gray-200">
-              <thead className="bg-gray-50 bg-opacity-5 backdrop-blur-md ">
+              <thead className="bg-gray-50 bg-opacity-5 ">
                 <tr>
                   <th
                     scope="col"
@@ -152,7 +152,7 @@ export default function Wallet() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white bg-opacity-5 backdrop-blur-md  divide-y divide-gray-200">
+              <tbody className="bg-white bg-opacity-5  divide-y divide-gray-200">
                 {filteredTransactions.map((transaction) => (
                   <tr
                     key={transaction.transaction_id}

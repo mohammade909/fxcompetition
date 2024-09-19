@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-
-import { useState } from "react";
+import AccountSelect from "../components/AccountSelect";
+import { useState, useEffect} from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -36,7 +36,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { Link, Outlet } from "react-router-dom";
 import { FaMoneyBill } from "react-icons/fa";
-
+import { getAccountsByTraderId } from "../../../actions/accounts";
 const navigation = [
   { name: "Home", href: "/user/dashboard", icon: HomeIcon, current: true },
   {
@@ -90,9 +90,16 @@ function classNames(...classes) {
 }
 
 export default function Dashboard() {
+  const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("Home");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { auth } = useSelector((state) => state.auth);
+  const { accounts } = useSelector(
+    (state) => state.accounts
+  );
+  useEffect(() => {
+    dispatch(getAccountsByTraderId(auth.user_id));
+  }, [dispatch]);
   const handleLogout = () => {
     localStorage.clear();
     window.location.href = "/";
@@ -248,7 +255,7 @@ export default function Dashboard() {
         </div>
 
         <div className="flex flex-1 flex-col lg:pl-64">
-          <div className="flex flex-shrink-0 bg-white bg-opacity-5 backdrop-blur-md border border-white border-opacity-20 rounded-lg lg:border-none p-5">
+          <div className="flex flex-shrink-0 bg-white bg-opacity-5  border border-white border-opacity-20 rounded-lg lg:border-none p-5">
             <button
               type="button"
               onClick={() => setSidebarOpen(true)}
@@ -259,8 +266,8 @@ export default function Dashboard() {
             </button>
             {/* Search bar */}
             <div className="flex flex-1 justify-between shadow-md rounded-md border-b px-4 sm:px-6 lg:mx-auto lg:max-w-6xl bg-white lg:px-8">
-              <div className="flex flex-1">
-                <form action="#" method="GET" className="flex w-full md:ml-0">
+              <div className="flex flex-1 items-center">
+                {/* <form action="#" method="GET" className="flex w-full md:ml-0">
                   <label htmlFor="search-field" className="sr-only">
                     Search
                   </label>
@@ -282,7 +289,8 @@ export default function Dashboard() {
                       className="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
                     />
                   </div>
-                </form>
+                </form> */}
+                <AccountSelect/>
               </div>
               <div className="ml-4 flex items-center md:ml-6">
                 <button

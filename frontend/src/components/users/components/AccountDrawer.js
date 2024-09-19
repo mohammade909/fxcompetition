@@ -6,17 +6,21 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { getWalletBalance } from "../../../actions/wallet";
-import {createAccount } from "../../../actions/accounts";
+import { createAccount } from "../../../actions/accounts";
 import { useDispatch, useSelector } from "react-redux";
+import SuccessModal from "../../../BaseFiles/SuccessModal";
 
 export default function AccountDrawer({ open, setOpen }) {
   const { balance } = useSelector((state) => state.wallet);
   const { auth } = useSelector((state) => state.auth);
+  const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
+
   // Formik setup
   useEffect(() => {
     dispatch(getWalletBalance(auth.user_id));
   }, [dispatch]);
+
   const formik = useFormik({
     initialValues: {
       trader_id: auth.user_id,
@@ -24,7 +28,8 @@ export default function AccountDrawer({ open, setOpen }) {
       initial_deposit: "",
       currency: "USD", // Default currency
       leverage: "",
-      is_demo: 0
+      server_id: 2890782,
+      is_demo: 0, // Default value for is_demo
     },
     validationSchema: Yup.object({
       initial_deposit: Yup.number()
@@ -36,16 +41,14 @@ export default function AccountDrawer({ open, setOpen }) {
         .min(1, "Leverage must be at least 1"),
     }),
     onSubmit: (values) => {
-      if(values.balance > balance || values.initial_deposit > balance){
-        alert("Insufficient balance for create a new account");
+      if (values.balance > balance || values.initial_deposit > balance) {
+        alert("Insufficient balance for creating a new account");
         return;
       }
-      // Handle form submission 
+      // Handle form submission
       dispatch(createAccount(values));
-      setOpen(false)
-     // Close the drawer after successful submission 
-      console.log(values);
-      // Add your submit logic here, such as API call to create an account
+      setOpen(false);
+      setOpenModal(true);
     },
   });
 
@@ -56,7 +59,7 @@ export default function AccountDrawer({ open, setOpen }) {
       className="relative z-10"
     >
       <div className="fixed inset-0" />
-
+      <SuccessModal open={openModal} setOpen={setOpenModal} />
       <div className="fixed inset-0 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
@@ -84,7 +87,7 @@ export default function AccountDrawer({ open, setOpen }) {
                   <form onSubmit={formik.handleSubmit}>
                     <div className="space-y-6">
                       {/* Balance */}
-                     
+
                       {/* Initial Deposit */}
                       <div>
                         <label
@@ -100,15 +103,14 @@ export default function AccountDrawer({ open, setOpen }) {
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           value={formik.values.initial_deposit}
-                          className={`mt-1 block w-full rounded-md border-gray-300 bg-gray-50 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
-                            formik.touched.initial_deposit &&
-                            formik.errors.initial_deposit
+                          className={`mt-1 block w-full rounded-md border-gray-300 bg-gray-50 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${formik.touched.initial_deposit &&
+                              formik.errors.initial_deposit
                               ? "border-red-500"
                               : ""
-                          }`}
+                            }`}
                         />
                         {formik.touched.initial_deposit &&
-                        formik.errors.initial_deposit ? (
+                          formik.errors.initial_deposit ? (
                           <p className="mt-2 text-sm text-red-600">
                             {formik.errors.initial_deposit}
                           </p>
@@ -129,11 +131,10 @@ export default function AccountDrawer({ open, setOpen }) {
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           value={formik.values.currency}
-                          className={`mt-1 block w-full rounded-md border-gray-300 bg-gray-50 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
-                            formik.touched.currency && formik.errors.currency
+                          className={`mt-1 block w-full rounded-md border-gray-300 bg-gray-50 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${formik.touched.currency && formik.errors.currency
                               ? "border-red-500"
                               : ""
-                          }`}
+                            }`}
                         >
                           <option value="USD">USD</option>
                           <option value="EUR">EUR</option>
@@ -163,17 +164,35 @@ export default function AccountDrawer({ open, setOpen }) {
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           value={formik.values.leverage}
-                          className={`mt-1 block w-full rounded-md border-gray-300 bg-gray-50 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
-                            formik.touched.leverage && formik.errors.leverage
+                          className={`mt-1 block w-full rounded-md border-gray-300 bg-gray-50 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${formik.touched.leverage && formik.errors.leverage
                               ? "border-red-500"
                               : ""
-                          }`}
+                            }`}
                         />
                         {formik.touched.leverage && formik.errors.leverage ? (
                           <p className="mt-2 text-sm text-red-600">
                             {formik.errors.leverage}
                           </p>
                         ) : null}
+                      </div>
+
+                      {/* Demo Account Checkbox */}
+                      <div className="flex items-center">
+                        <input
+                          id="is_demo"
+                          name="is_demo"
+                          type="checkbox"
+                          onChange={(e) => formik.setFieldValue("is_demo", e.target.checked ? 1 : 0)}
+                          onBlur={formik.handleBlur}
+                          checked={formik.values.is_demo === 1}
+                          className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                        />
+                        <label
+                          htmlFor="is_demo"
+                          className="ml-2 block text-sm font-medium text-gray-700"
+                        >
+                          Demo Account
+                        </label>
                       </div>
 
                       {/* Submit Button */}

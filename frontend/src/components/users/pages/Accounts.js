@@ -45,16 +45,16 @@ export default function Accounts() {
   return (
     <div className="px-6">
       <Header />
-      <div className="max-w-6xl mx-auto p-6 mt-10 bg-opacity-5 backdrop-blur-md  rounded-lg">
+      <div className="max-w-6xl mx-auto mt-10 bg-opacity-5   rounded-lg">
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold text-gray-800 mb-6">Accounts</h2>
-          {/* <button
+          <button
             type="button"
             onClick={() => setOpen(!open)}
             className="bg-green-500 text-white  px-4 py-2 rounded  hover:bg-green-600"
           >
             Create Account
-          </button> */}
+          </button>
         </div>
         {/* Display loading state */}
         {loading && (

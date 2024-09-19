@@ -225,7 +225,7 @@ export default function Pricing() {
     );
   }
   return (
-    <div className=" bg-opacity-5 backdrop-blur-md  p-6">
+    <div className=" bg-opacity-5   p-6">
       <div
         className="flex p-5 justify-center items-center mb-8 bg-cover bg-center relative h-48 rounded-lg"
         style={{ backgroundImage: "url('/pricing_banner.jpg')" }}

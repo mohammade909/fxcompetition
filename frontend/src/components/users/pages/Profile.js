@@ -36,9 +36,9 @@ const UserProfile = () => {
   });
 
   return (
-    <div className="flex flex-col md:flex-row max-w-4xl mx-auto mt-10 z-0 bg-opacity-5 backdrop-blur-md p-6 rounded-lg overflow-hidden">
+    <div className="flex flex-col md:flex-row max-w-4xl mx-auto mt-10 z-0 bg-opacity-5  p-6 rounded-lg overflow-hidden">
       {/* Profile Picture Section */}
-      <div className="w-full md:w-1/3 h-80 flex bg-opacity-5 backdrop-blur-md items-center justify-center">
+      <div className="w-full md:w-1/3 h-80 flex bg-opacity-5  items-center justify-center">
         <img
           src={user.profilePicture || "/user_profile.png"}
           alt="User Avatar"
